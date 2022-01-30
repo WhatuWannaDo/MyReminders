@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Главная" />
-    <item android:title="Законченные" />
-    <item android:title="Просроченные" />
+    <item
+        android:title="Главная"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:id="@+id/mainPageReminders"/>
+    <item
+        android:title="Законченные"
+        android:icon="@drawable/ic_baseline_done_24"
+        android:id="@+id/completedReminders"/>
+    <item
+        android:title="Просроченные"
+        android:icon="@drawable/ic_baseline_error_24"
+        android:id="@+id/overdueReminders"/>
+    <item
+        android:title="Добавить"
+        android:icon="@drawable/ic_baseline_playlist_add_24"
+        android:id="@+id/addNewReminder"/>
 </menu>

@@ -20,6 +20,12 @@ class ReminderViewModel(application: Application) : AndroidViewModel(application
         readAllReminders = repository.getAllReminders
     }
 
+    fun addReminder(reminder: ReminderModel){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.addReminder(reminder)
+        }
+    }
+
     fun updateReminder(reminder: ReminderModel){
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateReminder(reminder)
@@ -35,9 +41,8 @@ class ReminderViewModel(application: Application) : AndroidViewModel(application
         repository.deleteAllReminders()
     }
     fun findReminder(search: String){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.findReminder(search)
-        }
+        repository.findReminder(search)
+
     }
 
 

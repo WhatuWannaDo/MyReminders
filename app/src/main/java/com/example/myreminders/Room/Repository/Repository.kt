@@ -23,7 +23,7 @@ class Repository (private val remDao : DAO){
         remDao.deleteAllReminders()
     }
 
-    suspend fun findReminder(search : String) : LiveData<List<ReminderModel>>{
+    fun findReminder(search : String) : LiveData<List<ReminderModel>>{
         return remDao.findReminder(search)
     }
 }

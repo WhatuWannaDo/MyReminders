@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav"
+    app:startDestination="@id/mainPageReminders">
+
+    <fragment
+        android:id="@+id/mainPageReminders"
+        android:name="com.example.myreminders.MVVM.View.MainPage.MainPageReminders"
+        android:label="fragment_main_page_reminders"
+        tools:layout="@layout/fragment_main_page_reminders" />
+    <fragment
+        android:id="@+id/completedReminders"
+        android:name="com.example.myreminders.MVVM.View.Completed.CompletedReminders"
+        android:label="fragment_completed_reminders"
+        tools:layout="@layout/fragment_completed_reminders" />
+    <fragment
+        android:id="@+id/overdueReminders"
+        android:name="com.example.myreminders.MVVM.View.Overdue.OverdueReminders"
+        android:label="fragment_overdue_reminders"
+        tools:layout="@layout/fragment_overdue_reminders" />
+    <fragment
+        android:id="@+id/addNewReminder"
+        android:name="com.example.myreminders.MVVM.View.AddReminder.AddNewReminder"
+        android:label="fragment_add_new_reminder"
+        tools:layout="@layout/fragment_add_new_reminder" />
+</navigation>

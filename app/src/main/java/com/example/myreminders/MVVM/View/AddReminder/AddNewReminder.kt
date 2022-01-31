@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
@@ -39,12 +40,12 @@ class AddNewReminder : Fragment() {
 
             bottomSheetView.calendarView.setOnDateChangeListener { calendar, year, month, day ->
                 val realMonth = month+1
-                bottomSheetView.getDate.text = "$day-$realMonth-$year"
+                bottomSheetView.getDate.text = "$day.$realMonth.$year"
             }
 
             //data add
             bottomSheetView.saveAddedReminder.setOnClickListener {
-                val sdf = SimpleDateFormat("dd-M-yyyy")
+                val sdf = SimpleDateFormat("dd.M.yyyy")
                 val currentDate = sdf.format(Calendar.getInstance().time)
                 if(view.addInputHeader.text.toString().isNotEmpty() && view.addInputDescirption.text.toString().isNotEmpty()) {
                     val reminder = ReminderModel(
@@ -55,6 +56,8 @@ class AddNewReminder : Fragment() {
                         currentDate
                     )
                     viewModel.addReminder(reminder)
+                    Navigation.findNavController(view).navigate(R.id.action_addNewReminder_to_mainPageReminders)
+                    bottomSheetDialog.dismiss()
                 }else{
                     Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                 }

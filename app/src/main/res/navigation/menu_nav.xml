@@ -24,5 +24,9 @@
         android:id="@+id/addNewReminder"
         android:name="com.example.myreminders.MVVM.View.AddReminder.AddNewReminder"
         android:label="fragment_add_new_reminder"
-        tools:layout="@layout/fragment_add_new_reminder" />
+        tools:layout="@layout/fragment_add_new_reminder" >
+        <action
+            android:id="@+id/action_addNewReminder_to_mainPageReminders"
+            app:destination="@id/mainPageReminders" />
+    </fragment>
 </navigation>

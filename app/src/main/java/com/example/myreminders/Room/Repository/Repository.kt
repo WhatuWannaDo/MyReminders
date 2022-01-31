@@ -19,7 +19,7 @@ class Repository (private val remDao : DAO){
         remDao.deleteReminder(reminder)
     }
 
-    fun deleteAllReminders(){
+    suspend fun deleteAllReminders(){
         remDao.deleteAllReminders()
     }
 

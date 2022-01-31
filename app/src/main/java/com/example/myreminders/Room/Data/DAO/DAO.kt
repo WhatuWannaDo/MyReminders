@@ -20,8 +20,8 @@ interface DAO {
     suspend fun deleteReminder(reminder: ReminderModel)
 
     @Query("DELETE FROM reminders")
-    fun deleteAllReminders()
+    suspend fun deleteAllReminders()
 
-    @Query("SELECT * FROM reminders WHERE header OR description OR startTime OR endTime LIKE :searchQuery")
+    @Query("SELECT * FROM reminders WHERE header LIKE :searchQuery OR description LIKE :searchQuery OR startTime LIKE :searchQuery OR endTime LIKE :searchQuery")
     fun findReminder(searchQuery : String): LiveData<List<ReminderModel>>
 }

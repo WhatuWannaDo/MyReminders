@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ReminderViewModel(application: Application) : AndroidViewModel(application) {
-    private val readAllReminders : LiveData<List<ReminderModel>>
+    val readAllReminders : LiveData<List<ReminderModel>>
     private val repository : Repository
 
     init {
@@ -38,10 +38,12 @@ class ReminderViewModel(application: Application) : AndroidViewModel(application
         }
     }
     fun deleteAllReminders(){
-        repository.deleteAllReminders()
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteAllReminders()
+        }
     }
-    fun findReminder(search: String){
-        repository.findReminder(search)
+    fun findReminder(search: String): LiveData<List<ReminderModel>>{
+        return repository.findReminder(search)
 
     }
 

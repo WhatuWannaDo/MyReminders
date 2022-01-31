@@ -25,8 +25,8 @@ class MainPageAdapter : RecyclerView.Adapter<MainPageAdapter.MyViewHolder>() {
 
         holder.itemView.idForDelete.text = list.id.toString()
         holder.itemView.rowHeader.text = list.header
-        holder.itemView.rowStartTime.text = "Дата начала: " + list.startTime
-        holder.itemView.rowEndTime.text = "Дата окончания: " + list.endTime
+        holder.itemView.rowStartTime.text = list.startTime
+        holder.itemView.rowEndTime.text = list.endTime
 
     }
 

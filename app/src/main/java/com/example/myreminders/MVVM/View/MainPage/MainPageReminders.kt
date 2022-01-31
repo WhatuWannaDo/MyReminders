@@ -1,5 +1,6 @@
 package com.example.myreminders.MVVM.View.MainPage
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
@@ -9,20 +10,26 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.bottom_sheet.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_update_reminder.view.*
 import kotlinx.android.synthetic.main.fragment_main_page_reminders.view.*
 import kotlinx.android.synthetic.main.main_page_reminders_row.*
+import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
 
 
 class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
     private val adapter = MainPageAdapter()
     private lateinit var viewModel : ReminderViewModel
+    private val args by navArgs<MainPageRemindersArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +63,10 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
         }).attachToRecyclerView(view.recyclerView)
 
+
+
+
+        //update data by swipe
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -65,8 +76,75 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                 return false
             }
 
+            //update bottom sheet
+            @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                //TODO: обновить свайпнутое напоминание с помощью bottom_sheet или редиректом на другую страницу с помощью safe args
+
+                val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+                val bottomSheetView = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_update_reminder, container, false)
+
+                //pushing safe args into editText
+                bottomSheetView.updateInputHeader.setText(args.safeArgsMainRow.header)
+                bottomSheetView.updateInputDescirption.setText(args.safeArgsMainRow.description)
+
+                //calendar click listener
+                bottomSheetView.updateCalendarDate.setOnClickListener {
+                    val bottomSheetDialogCalendar = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+                    val bottomSheetViewCalendar = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet, container, false)
+
+                    //edit calendar date
+                    bottomSheetViewCalendar.calendarView.setOnDateChangeListener { calendar, year, month, day ->
+                        val realMonth = month+1
+                        bottomSheetViewCalendar.getDate.text = "$day.$realMonth.$year"
+                    }
+                    //update reminder from calendar bottom sheet with date change
+                    bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
+                        if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
+                            val reminder = ReminderModel(
+                                Integer.parseInt(view.idForDelete.text.toString()),
+                                bottomSheetView.updateInputHeader.text.toString(),
+                                bottomSheetView.updateInputDescirption.text.toString(),
+                                bottomSheetViewCalendar.getDate.text.toString(),
+                                view.rowStartTime.text.toString()
+                            )
+
+                            viewModel.updateReminder(reminder)
+                            bottomSheetDialogCalendar.dismiss()
+                            bottomSheetDialog.dismiss()
+                        }else{
+                            Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    bottomSheetDialogCalendar.setContentView(bottomSheetViewCalendar)
+                    bottomSheetDialogCalendar.show()
+                }
+
+                //update reminder from bottom_sheet_update without date change
+                bottomSheetView.updateReminderSheet.setOnClickListener {
+                    if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
+                        val reminder = ReminderModel(
+                            Integer.parseInt(view.idForDelete.text.toString()),
+                            bottomSheetView.updateInputHeader.text.toString(),
+                            bottomSheetView.updateInputDescirption.text.toString(),
+                            view.rowEndTime.text.toString(),
+                            view.rowStartTime.text.toString()
+                        )
+
+                        viewModel.updateReminder(reminder)
+                        bottomSheetDialog.dismiss()
+                    }else{
+                        Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.show()
+
+                adapter.notifyDataSetChanged()
+
             }
 
         }).attachToRecyclerView(view.recyclerView)

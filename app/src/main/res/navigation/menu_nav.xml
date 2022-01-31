@@ -9,7 +9,11 @@
         android:id="@+id/mainPageReminders"
         android:name="com.example.myreminders.MVVM.View.MainPage.MainPageReminders"
         android:label="fragment_main_page_reminders"
-        tools:layout="@layout/fragment_main_page_reminders" />
+        tools:layout="@layout/fragment_main_page_reminders" >
+        <argument
+            android:name="safeArgsMainRow"
+            app:argType="com.example.myreminders.MVVM.Model.ReminderModel" />
+    </fragment>
     <fragment
         android:id="@+id/completedReminders"
         android:name="com.example.myreminders.MVVM.View.Completed.CompletedReminders"

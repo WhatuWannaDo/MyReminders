@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.ListFragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.R
@@ -25,8 +27,15 @@ class MainPageAdapter : RecyclerView.Adapter<MainPageAdapter.MyViewHolder>() {
 
         holder.itemView.idForDelete.text = list.id.toString()
         holder.itemView.rowHeader.text = list.header
+        holder.itemView.goneDescription.text = list.description
         holder.itemView.rowStartTime.text = list.startTime
         holder.itemView.rowEndTime.text = list.endTime
+
+        //redirect with safe args to show reminder
+        holder.itemView.rowOfMainPageItems.setOnClickListener {
+            val action = MainPageRemindersDirections.actionMainPageRemindersToShowFullReminder(list)
+            holder.itemView.findNavController().navigate(action)
+        }
 
     }
 

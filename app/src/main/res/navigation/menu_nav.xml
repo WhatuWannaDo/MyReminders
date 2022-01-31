@@ -13,6 +13,9 @@
         <argument
             android:name="safeArgsMainRow"
             app:argType="com.example.myreminders.MVVM.Model.ReminderModel" />
+        <action
+            android:id="@+id/action_mainPageReminders_to_showFullReminder"
+            app:destination="@id/showFullReminder" />
     </fragment>
     <fragment
         android:id="@+id/completedReminders"
@@ -32,5 +35,14 @@
         <action
             android:id="@+id/action_addNewReminder_to_mainPageReminders"
             app:destination="@id/mainPageReminders" />
+    </fragment>
+    <fragment
+        android:id="@+id/showFullReminder"
+        android:name="com.example.myreminders.MVVM.View.MainPage.ShowFullReminder"
+        android:label="fragment_show_full_reminder"
+        tools:layout="@layout/fragment_show_full_reminder" >
+        <argument
+            android:name="argsForFullReminder"
+            app:argType="com.example.myreminders.MVVM.Model.ReminderModel" />
     </fragment>
 </navigation>

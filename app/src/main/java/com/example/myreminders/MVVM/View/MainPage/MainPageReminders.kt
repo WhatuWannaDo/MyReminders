@@ -29,7 +29,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
     private val adapter = MainPageAdapter()
     private lateinit var viewModel : ReminderViewModel
-    private val args by navArgs<MainPageRemindersArgs>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +65,6 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
 
 
-
         //update data by swipe
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
@@ -83,9 +82,9 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                 val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
                 val bottomSheetView = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_update_reminder, container, false)
 
-                //pushing safe args into editText
-                bottomSheetView.updateInputHeader.setText(args.safeArgsMainRow.header)
-                bottomSheetView.updateInputDescirption.setText(args.safeArgsMainRow.description)
+                //setting data in bottom sheet
+                bottomSheetView.updateInputHeader.setText(viewHolder.itemView.rowHeader.text.toString())
+                bottomSheetView.updateInputDescirption.setText(viewHolder.itemView.goneDescription.text.toString())
 
                 //calendar click listener
                 bottomSheetView.updateCalendarDate.setOnClickListener {
@@ -137,8 +136,6 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                         Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-
 
                 bottomSheetDialog.setContentView(bottomSheetView)
                 bottomSheetDialog.show()

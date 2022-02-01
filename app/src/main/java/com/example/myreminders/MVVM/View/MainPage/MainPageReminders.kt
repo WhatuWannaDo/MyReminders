@@ -14,7 +14,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myreminders.MVVM.Model.CompletedReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
+import com.example.myreminders.MVVM.ViewModel.CompletedReminderViewModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,13 +26,15 @@ import kotlinx.android.synthetic.main.bottom_sheet_update_reminder.view.*
 import kotlinx.android.synthetic.main.fragment_main_page_reminders.view.*
 import kotlinx.android.synthetic.main.main_page_reminders_row.*
 import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
     private val adapter = MainPageAdapter()
     private lateinit var viewModel : ReminderViewModel
-
+    private lateinit var completedViewModel : CompletedReminderViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +49,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel = ViewModelProvider(this).get(ReminderViewModel::class.java)
-
+        completedViewModel = ViewModelProvider(this).get(CompletedReminderViewModel::class.java)
 
 
         //update data by swipe
@@ -149,7 +153,18 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                 }
 
 
-
+                bottomSheetViewChoice.bottomSheetChoiceReady.setOnClickListener {
+                    val sdf = SimpleDateFormat("dd.M.yyyy")
+                    val currentDate = sdf.format(Calendar.getInstance().time)
+                    val completedReminder = CompletedReminderModel(
+                        0,
+                        viewHolder.itemView.rowHeader.text.toString(),
+                        viewHolder.itemView.goneDescription.text.toString(),
+                        currentDate
+                    )
+                    completedViewModel.addCompletedReminder(completedReminder)
+                    deleteReminderFromDatabase()
+                }
 
 
                 bottomSheetDialogChoice.setContentView(bottomSheetViewChoice)

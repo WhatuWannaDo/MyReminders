@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.myreminders.MVVM.Model.CompletedReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.Room.Data.DAO.DAO
+import com.example.myreminders.Room.Data.DAO.DAOCompletedReminders
 
-@Database(entities = [ReminderModel::class], exportSchema = false, version = 1)
+@Database(entities = [ReminderModel::class, CompletedReminderModel::class], exportSchema = false, version = 2)
 abstract class DataBase : RoomDatabase(){
     abstract fun reminderDao() : DAO
+    abstract fun completedDao() : DAOCompletedReminders
 
     companion object{
         @Volatile

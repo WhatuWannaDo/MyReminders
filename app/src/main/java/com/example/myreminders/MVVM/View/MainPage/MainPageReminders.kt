@@ -19,6 +19,7 @@ import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_choice.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_update_reminder.view.*
 import kotlinx.android.synthetic.main.fragment_main_page_reminders.view.*
 import kotlinx.android.synthetic.main.main_page_reminders_row.*
@@ -47,24 +48,6 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
 
 
-        //delete single data on swipe
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deleteReminderFromDatabase()
-            }
-
-        }).attachToRecyclerView(view.recyclerView)
-
-
-
         //update data by swipe
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
@@ -75,71 +58,102 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                 return false
             }
 
+
             //update bottom sheet
             @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
+
+                val bottomSheetDialogChoice = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+                val bottomSheetViewChoice = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_choice, container, false)
+
+
                 val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
                 val bottomSheetView = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_update_reminder, container, false)
 
-                //setting data in bottom sheet
-                bottomSheetView.updateInputHeader.setText(viewHolder.itemView.rowHeader.text.toString())
-                bottomSheetView.updateInputDescirption.setText(viewHolder.itemView.goneDescription.text.toString())
+                //choiced update item in menu choice
+                bottomSheetViewChoice.bottomSheetChoiceUpdate.setOnClickListener {
+                    //setting data in bottom sheet
+                    bottomSheetView.updateInputHeader.setText(viewHolder.itemView.rowHeader.text.toString())
+                    bottomSheetView.updateInputDescirption.setText(viewHolder.itemView.goneDescription.text.toString())
 
-                //calendar click listener
-                bottomSheetView.updateCalendarDate.setOnClickListener {
-                    val bottomSheetDialogCalendar = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-                    val bottomSheetViewCalendar = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet, container, false)
+                    //calendar click listener
+                    bottomSheetView.updateCalendarDate.setOnClickListener {
+                        val bottomSheetDialogCalendar = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+                        val bottomSheetViewCalendar = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet, container, false)
 
-                    //edit calendar date
-                    bottomSheetViewCalendar.calendarView.setOnDateChangeListener { calendar, year, month, day ->
-                        val realMonth = month+1
-                        bottomSheetViewCalendar.getDate.text = "$day.$realMonth.$year"
+                        //edit calendar date
+                        bottomSheetViewCalendar.calendarView.setOnDateChangeListener { calendar, year, month, day ->
+                            val realMonth = month+1
+                            bottomSheetViewCalendar.getDate.text = "$day.$realMonth.$year"
+                        }
+                        //update reminder from calendar bottom sheet with date change
+                        bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
+                            if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
+                                val reminder = ReminderModel(
+                                    Integer.parseInt(view.idForDelete.text.toString()),
+                                    bottomSheetView.updateInputHeader.text.toString(),
+                                    bottomSheetView.updateInputDescirption.text.toString(),
+                                    bottomSheetViewCalendar.getDate.text.toString(),
+                                    view.rowStartTime.text.toString()
+                                )
+
+                                viewModel.updateReminder(reminder)
+                                bottomSheetDialogCalendar.dismiss()
+                                bottomSheetDialog.dismiss()
+                                bottomSheetDialogChoice.dismiss()
+                            }else{
+                                Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        bottomSheetDialogCalendar.setContentView(bottomSheetViewCalendar)
+                        bottomSheetDialogCalendar.show()
                     }
-                    //update reminder from calendar bottom sheet with date change
-                    bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
+
+                    //update reminder from bottom_sheet_update without date change
+                    bottomSheetView.updateReminderSheet.setOnClickListener {
                         if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
                             val reminder = ReminderModel(
                                 Integer.parseInt(view.idForDelete.text.toString()),
                                 bottomSheetView.updateInputHeader.text.toString(),
                                 bottomSheetView.updateInputDescirption.text.toString(),
-                                bottomSheetViewCalendar.getDate.text.toString(),
+                                view.rowEndTime.text.toString(),
                                 view.rowStartTime.text.toString()
                             )
 
                             viewModel.updateReminder(reminder)
-                            bottomSheetDialogCalendar.dismiss()
                             bottomSheetDialog.dismiss()
+                            bottomSheetDialogChoice.dismiss()
                         }else{
                             Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                         }
                     }
 
-                    bottomSheetDialogCalendar.setContentView(bottomSheetViewCalendar)
-                    bottomSheetDialogCalendar.show()
+                    bottomSheetDialog.setContentView(bottomSheetView)
+                    bottomSheetDialog.show()
                 }
 
-                //update reminder from bottom_sheet_update without date change
-                bottomSheetView.updateReminderSheet.setOnClickListener {
-                    if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
-                        val reminder = ReminderModel(
-                            Integer.parseInt(view.idForDelete.text.toString()),
-                            bottomSheetView.updateInputHeader.text.toString(),
-                            bottomSheetView.updateInputDescirption.text.toString(),
-                            view.rowEndTime.text.toString(),
-                            view.rowStartTime.text.toString()
-                        )
-
-                        viewModel.updateReminder(reminder)
-                        bottomSheetDialog.dismiss()
-                    }else{
-                        Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                //delete single data option menu
+                bottomSheetViewChoice.bottomSheetChoiceDelete.setOnClickListener {
+                    val builder = AlertDialog.Builder(context)
+                    builder.setPositiveButton("Да") { _, _ ->
+                        deleteReminderFromDatabase()
+                        bottomSheetDialogChoice.dismiss()
                     }
+                    builder.setNegativeButton("Нет") { _, _ ->
+                        adapter.notifyDataSetChanged()
+                    }
+                    builder.setMessage("Удалить это напоминание?")
+                    builder.create().show()
                 }
 
-                bottomSheetDialog.setContentView(bottomSheetView)
-                bottomSheetDialog.show()
 
+
+
+
+                bottomSheetDialogChoice.setContentView(bottomSheetViewChoice)
+                bottomSheetDialogChoice.show()
                 adapter.notifyDataSetChanged()
 
             }
@@ -181,11 +195,11 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             val builder = AlertDialog.Builder(context)
             builder.setPositiveButton("Да") { _, _ ->
                 viewModel.deleteAllReminders()
-                Toast.makeText(context, "Все пользователи удалены", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Все напоминания удалены", Toast.LENGTH_SHORT)
                     .show()
             }
             builder.setNegativeButton("Нет") { _, _ -> }
-            builder.setTitle("Удалить всех пользователей?")
+            builder.setTitle("Удалить все напоминания?")
             builder.setMessage("Вы уверены что хотите это сделать?")
             builder.create().show()
             true

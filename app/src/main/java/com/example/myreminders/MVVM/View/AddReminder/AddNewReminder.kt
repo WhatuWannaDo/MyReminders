@@ -41,6 +41,7 @@ class AddNewReminder : Fragment() {
             bottomSheetView.calendarView.setOnDateChangeListener { calendar, year, month, day ->
                 val realMonth = month+1
                 bottomSheetView.getDate.text = "$day.$realMonth.$year"
+
             }
 
             //data add
@@ -52,7 +53,7 @@ class AddNewReminder : Fragment() {
                         0,
                         view.addInputHeader.text.toString(),
                         view.addInputDescirption.text.toString(),
-                        bottomSheetView.getDate.text.toString(),
+                        getDateInMills(bottomSheetView.getDate.text.toString()).toString(),
                         currentDate
                     )
                     viewModel.addReminder(reminder)
@@ -72,5 +73,12 @@ class AddNewReminder : Fragment() {
     }
 
 
+    @SuppressLint("SimpleDateFormat")
+    fun getDateInMills(date : String) : Long{
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+        val dateParse = sdf.parse(date)
+        val dateInMills = dateParse.time
+        return dateInMills
+    }
 
 }

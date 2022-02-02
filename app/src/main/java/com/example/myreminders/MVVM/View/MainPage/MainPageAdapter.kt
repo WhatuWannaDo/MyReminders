@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.R
 import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainPageAdapter : RecyclerView.Adapter<MainPageAdapter.MyViewHolder>() {
 
@@ -25,11 +28,13 @@ class MainPageAdapter : RecyclerView.Adapter<MainPageAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val list = remList[position]
 
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+
         holder.itemView.idForDelete.text = list.id.toString()
         holder.itemView.rowHeader.text = list.header
         holder.itemView.goneDescription.text = list.description
         holder.itemView.rowStartTime.text = list.startTime
-        holder.itemView.rowEndTime.text = list.endTime
+        holder.itemView.rowEndTime.text = sdf.format(list.endTime.toLong())
 
         //redirect with safe args to show reminder
         holder.itemView.rowOfMainPageItems.setOnClickListener {

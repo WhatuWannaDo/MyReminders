@@ -1,5 +1,6 @@
 package com.example.myreminders.MVVM.View.Completed
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -112,7 +113,7 @@ class CompletedReminders : Fragment() {
                                 Integer.parseInt(view.completeIdForDelete.text.toString()),
                                 bottomSheetView.updateInputHeader.text.toString(),
                                 bottomSheetView.updateInputDescirption.text.toString(),
-                                bottomSheetViewCalendar.getDate.text.toString(),
+                                getDateInMills(bottomSheetViewCalendar.getDate.text.toString()).toString(),
                                 currentDate
                             )
 
@@ -146,5 +147,11 @@ class CompletedReminders : Fragment() {
         viewModel.deleteCompletedReminder(reminder)
     }
 
-
+    @SuppressLint("SimpleDateFormat")
+    fun getDateInMills(date : String) : Long{
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+        val dateParse = sdf.parse(date)
+        val dateInMills = dateParse.time
+        return dateInMills
+    }
 }

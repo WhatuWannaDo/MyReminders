@@ -91,6 +91,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                             val realMonth = month+1
                             bottomSheetViewCalendar.getDate.text = "$day.$realMonth.$year"
                         }
+
                         //update reminder from calendar bottom sheet with date change
                         bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
                             if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
@@ -98,7 +99,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                                     Integer.parseInt(view.idForDelete.text.toString()),
                                     bottomSheetView.updateInputHeader.text.toString(),
                                     bottomSheetView.updateInputDescirption.text.toString(),
-                                    bottomSheetViewCalendar.getDate.text.toString(),
+                                    getDateInMills(bottomSheetViewCalendar.getDate.text.toString()).toString(),
                                     view.rowStartTime.text.toString()
                                 )
 
@@ -122,7 +123,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                                 Integer.parseInt(view.idForDelete.text.toString()),
                                 bottomSheetView.updateInputHeader.text.toString(),
                                 bottomSheetView.updateInputDescirption.text.toString(),
-                                view.rowEndTime.text.toString(),
+                                getDateInMills(view.rowEndTime.text.toString()).toString(),
                                 view.rowStartTime.text.toString()
                             )
 
@@ -241,5 +242,11 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             }
         })
     }
-
+    @SuppressLint("SimpleDateFormat")
+    fun getDateInMills(date : String) : Long{
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+        val dateParse = sdf.parse(date)
+        val dateInMills = dateParse.time
+        return dateInMills
+    }
 }

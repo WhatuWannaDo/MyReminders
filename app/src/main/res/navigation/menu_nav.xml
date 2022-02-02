@@ -18,11 +18,6 @@
             app:destination="@id/showFullReminder" />
     </fragment>
     <fragment
-        android:id="@+id/completedReminders"
-        android:name="com.example.myreminders.MVVM.View.Completed.CompletedReminders"
-        android:label="fragment_completed_reminders"
-        tools:layout="@layout/fragment_completed_reminders" />
-    <fragment
         android:id="@+id/overdueReminders"
         android:name="com.example.myreminders.MVVM.View.Overdue.OverdueReminders"
         android:label="fragment_overdue_reminders"
@@ -44,5 +39,23 @@
         <argument
             android:name="argsForFullReminder"
             app:argType="com.example.myreminders.MVVM.Model.ReminderModel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showFullCompletedReminder2"
+        android:name="com.example.myreminders.MVVM.View.Completed.showFullCompletedReminder"
+        android:label="showFullCompletedReminder"
+        tools:layout="@layout/fragment_show_full_completed_reminder">
+        <argument android:name="argsForFullCompleted"
+            app:argType="com.example.myreminders.MVVM.Model.CompletedReminderModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/completedReminders2"
+        android:name="com.example.myreminders.MVVM.View.Completed.CompletedReminders"
+        android:label="fragment_completed_reminders"
+        tools:layout="@layout/fragment_completed_reminders" >
+        <action
+            android:id="@+id/action_completedReminders2_to_showFullCompletedReminder2"
+            app:destination="@id/showFullCompletedReminder2" />
     </fragment>
 </navigation>

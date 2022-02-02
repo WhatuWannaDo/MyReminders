@@ -8,7 +8,7 @@
     <item
         android:title="Законченные"
         android:icon="@drawable/ic_baseline_done_24"
-        android:id="@+id/completedReminders"/>
+        android:id="@+id/completedReminders2"/>
     <item
         android:title="Просроченные"
         android:icon="@drawable/ic_baseline_error_24"

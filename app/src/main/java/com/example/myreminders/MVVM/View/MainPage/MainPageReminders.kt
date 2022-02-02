@@ -164,6 +164,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                     )
                     completedViewModel.addCompletedReminder(completedReminder)
                     deleteReminderFromDatabase()
+                    bottomSheetDialogChoice.dismiss()
                 }
 
 

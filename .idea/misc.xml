@@ -11,10 +11,12 @@
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/bottom_sheet_choice.xml" value="0.5" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/bottom_sheet_update_calendar_date.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/bottom_sheet_update_reminder.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/completed_reminders_row.xml" value="0.5" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_add_new_reminder.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_completed_reminders.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_main_page_reminders.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_overdue_reminders.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_show_full_completed_reminder.xml" value="0.67" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/fragment_show_full_reminder.xml" value="0.67" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/main_page_reminders_row.xml" value="0.67" />
         <entry key="..\:/Users/popa/AndroidStudioProjects/MyReminders/app/src/main/res/layout/show_full_reminder.xml" value="0.67" />

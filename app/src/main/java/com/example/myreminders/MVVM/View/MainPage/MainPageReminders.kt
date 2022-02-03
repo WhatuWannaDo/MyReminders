@@ -67,7 +67,6 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-
                 val bottomSheetDialogChoice = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
                 val bottomSheetViewChoice = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_choice, container, false)
 
@@ -143,7 +142,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                 bottomSheetViewChoice.bottomSheetChoiceDelete.setOnClickListener {
                     val builder = AlertDialog.Builder(context)
                     builder.setPositiveButton("Да") { _, _ ->
-                        deleteReminderFromDatabase()
+                        deleteReminderFromDatabase(Integer.parseInt(viewHolder.itemView.idForDelete.text.toString()))
                         bottomSheetDialogChoice.dismiss()
                     }
                     builder.setNegativeButton("Нет") { _, _ ->
@@ -164,7 +163,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                         currentDate
                     )
                     completedViewModel.addCompletedReminder(completedReminder)
-                    deleteReminderFromDatabase()
+                    deleteReminderFromDatabase(Integer.parseInt(viewHolder.itemView.idForDelete.text.toString()))
                     bottomSheetDialogChoice.dismiss()
                 }
 
@@ -193,9 +192,8 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
 
 
-    private fun deleteReminderFromDatabase() {
-        val id = idForDelete.text.toString()
-        val reminder = ReminderModel(Integer.parseInt(id), "", "", "", "")
+    private fun deleteReminderFromDatabase(id : Int) {
+        val reminder = ReminderModel(id, "", "", "", "")
         viewModel.deleteReminder(reminder)
     }
 

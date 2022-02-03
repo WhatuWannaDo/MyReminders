@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.myreminders.MVVM.Model.OverdueReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
+import com.example.myreminders.MVVM.ViewModel.OverdueReminderViewModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -56,6 +58,7 @@ class AddNewReminder : Fragment() {
                         getDateInMills(bottomSheetView.getDate.text.toString()).toString(),
                         currentDate
                     )
+
                     viewModel.addReminder(reminder)
                     Navigation.findNavController(view).navigate(R.id.action_addNewReminder_to_mainPageReminders)
                     bottomSheetDialog.dismiss()

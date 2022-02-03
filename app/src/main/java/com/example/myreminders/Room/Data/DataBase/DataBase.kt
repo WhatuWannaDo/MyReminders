@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myreminders.MVVM.Model.CompletedReminderModel
+import com.example.myreminders.MVVM.Model.OverdueReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.Room.Data.DAO.DAO
 import com.example.myreminders.Room.Data.DAO.DAOCompletedReminders
+import com.example.myreminders.Room.Data.DAO.DAOOverdueReminders
 
-@Database(entities = [ReminderModel::class, CompletedReminderModel::class], exportSchema = false, version = 2)
+@Database(entities = [ReminderModel::class, CompletedReminderModel::class, OverdueReminderModel::class], exportSchema = false, version = 3)
 abstract class DataBase : RoomDatabase(){
     abstract fun reminderDao() : DAO
     abstract fun completedDao() : DAOCompletedReminders
+    abstract fun overdueDao() : DAOOverdueReminders
 
     companion object{
         @Volatile

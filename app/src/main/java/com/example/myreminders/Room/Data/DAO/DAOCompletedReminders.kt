@@ -12,13 +12,8 @@ interface DAOCompletedReminders {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCompletedReminder(reminder : CompletedReminderModel)
 
-    @Update
-    suspend fun updateCompletedReminder(reminder: CompletedReminderModel)
-
     @Delete
     suspend fun deleteCompletedReminder(reminder: CompletedReminderModel)
 
-    @Query("DELETE FROM completed_reminders")
-    suspend fun deleteAllCompletedReminders()
 
 }

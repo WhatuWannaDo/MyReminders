@@ -21,7 +21,11 @@
         android:id="@+id/overdueReminders"
         android:name="com.example.myreminders.MVVM.View.Overdue.OverdueReminders"
         android:label="fragment_overdue_reminders"
-        tools:layout="@layout/fragment_overdue_reminders" />
+        tools:layout="@layout/fragment_overdue_reminders" >
+        <action
+            android:id="@+id/action_overdueReminders_to_showFullOverdueReminder"
+            app:destination="@id/showFullOverdueReminder" />
+    </fragment>
     <fragment
         android:id="@+id/addNewReminder"
         android:name="com.example.myreminders.MVVM.View.AddReminder.AddNewReminder"
@@ -57,5 +61,14 @@
         <action
             android:id="@+id/action_completedReminders2_to_showFullCompletedReminder2"
             app:destination="@id/showFullCompletedReminder2" />
+    </fragment>
+    <fragment
+        android:id="@+id/showFullOverdueReminder"
+        android:name="com.example.myreminders.MVVM.View.Overdue.ShowFullOverdueReminder"
+        android:label="ShowFullOverdueReminder"
+        tools:layout="@layout/fragment_show_full_overdue_reminder">
+        <argument
+            android:name="argsForOverdueReminder"
+            app:argType="com.example.myreminders.MVVM.Model.OverdueReminderModel" />
     </fragment>
 </navigation>

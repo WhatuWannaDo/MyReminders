@@ -26,19 +26,11 @@ class CompletedReminderViewModel(application: Application) : AndroidViewModel(ap
             repository.addCompletedReminder(completedReminderModel)
         }
     }
-    fun updateCompletedReminder(completedReminderModel: CompletedReminderModel){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateCompletedReminder(completedReminderModel)
-        }
-    }
+
     fun deleteCompletedReminder(completedReminderModel: CompletedReminderModel){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteCompletedReminder(completedReminderModel)
         }
     }
-    fun deleteAllCompletedReminders(){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllCompletedReminders()
-        }
-    }
+
 }

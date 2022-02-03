@@ -70,7 +70,7 @@ class CompletedReminders : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deleteSingleDataFromDatabase()
+                deleteSingleDataFromDatabase(Integer.parseInt(viewHolder.itemView.completeIdForDelete.text.toString()))
             }
         }).attachToRecyclerView(view.completedRecycler)
 
@@ -118,7 +118,7 @@ class CompletedReminders : Fragment() {
                             )
 
                             reminderViewModel.addReminder(reminder)
-                            deleteSingleDataFromDatabase()
+                            deleteSingleDataFromDatabase(Integer.parseInt(viewHolder.itemView.completeIdForDelete.text.toString()))
                             bottomSheetDialogCalendar.dismiss()
                             bottomSheetDialog.dismiss()
                             adapter.notifyDataSetChanged()
@@ -142,8 +142,8 @@ class CompletedReminders : Fragment() {
         return view
     }
 
-    private fun deleteSingleDataFromDatabase(){
-        val reminder = CompletedReminderModel(Integer.parseInt(completeIdForDelete.text.toString()), "", "", "")
+    private fun deleteSingleDataFromDatabase(id : Int){
+        val reminder = CompletedReminderModel(id, "", "", "")
         viewModel.deleteCompletedReminder(reminder)
     }
 

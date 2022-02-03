@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.CompletedReminderModel
+import com.example.myreminders.MVVM.Model.OverdueReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.MVVM.ViewModel.CompletedReminderViewModel
+import com.example.myreminders.MVVM.ViewModel.OverdueReminderViewModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -50,6 +52,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
         viewModel = ViewModelProvider(this).get(ReminderViewModel::class.java)
         completedViewModel = ViewModelProvider(this).get(CompletedReminderViewModel::class.java)
+
 
 
         //update data by swipe

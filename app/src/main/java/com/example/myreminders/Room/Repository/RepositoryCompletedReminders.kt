@@ -11,15 +11,8 @@ class RepositoryCompletedReminders(private val compDao: DAOCompletedReminders) {
         compDao.addCompletedReminder(completedReminder)
     }
 
-    suspend fun updateCompletedReminder(completedReminder: CompletedReminderModel){
-        compDao.updateCompletedReminder(completedReminder)
-    }
-
     suspend fun deleteCompletedReminder(completedReminder: CompletedReminderModel){
         compDao.deleteCompletedReminder(completedReminder)
     }
 
-    suspend fun deleteAllCompletedReminders(){
-        compDao.deleteAllCompletedReminders()
-    }
 }

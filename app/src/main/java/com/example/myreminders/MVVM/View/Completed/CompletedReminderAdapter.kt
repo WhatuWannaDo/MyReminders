@@ -11,6 +11,7 @@ import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.R
 import kotlinx.android.synthetic.main.completed_reminders_row.view.*
 import kotlinx.android.synthetic.main.fragment_completed_reminders.view.*
+import java.text.SimpleDateFormat
 
 class CompletedReminderAdapter : RecyclerView.Adapter<CompletedReminderAdapter.MyCompletedViewHolder>() {
 
@@ -26,8 +27,10 @@ class CompletedReminderAdapter : RecyclerView.Adapter<CompletedReminderAdapter.M
     override fun onBindViewHolder(holder: MyCompletedViewHolder, position: Int) {
         val list = remList[position]
 
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+
         holder.itemView.completedHeaderRow.setText(list.header)
-        holder.itemView.completedDateRow.setText(list.completedTime)
+        holder.itemView.completedDateRow.setText(sdf.format(list.completedTime.toLong()))
 
         holder.itemView.completeIdForDelete.setText(list.id.toString())
         holder.itemView.completeDescription.setText(list.description)

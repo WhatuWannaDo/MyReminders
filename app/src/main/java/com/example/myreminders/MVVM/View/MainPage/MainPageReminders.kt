@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.main_page_reminders_row.*
 import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
@@ -37,13 +38,15 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
     private val adapter = MainPageAdapter()
     private lateinit var viewModel : ReminderViewModel
     private lateinit var completedViewModel : CompletedReminderViewModel
+    private lateinit var overdueViewModel: OverdueReminderViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_page_reminders, container, false)
+
         setHasOptionsMenu(true)
 
         val recyclerView = view.recyclerView
@@ -52,6 +55,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
         viewModel = ViewModelProvider(this).get(ReminderViewModel::class.java)
         completedViewModel = ViewModelProvider(this).get(CompletedReminderViewModel::class.java)
+        overdueViewModel = ViewModelProvider(this).get(OverdueReminderViewModel::class.java)
 
 
 
@@ -66,7 +70,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             }
 
 
-            //update bottom sheet
+            //choice bottom sheet
             @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
@@ -98,11 +102,11 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                         bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
                             if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
                                 val reminder = ReminderModel(
-                                    Integer.parseInt(view.idForDelete.text.toString()),
+                                    Integer.parseInt(viewHolder.itemView.idForDelete.text.toString()),
                                     bottomSheetView.updateInputHeader.text.toString(),
                                     bottomSheetView.updateInputDescirption.text.toString(),
                                     getDateInMills(bottomSheetViewCalendar.getDate.text.toString()).toString(),
-                                    view.rowStartTime.text.toString()
+                                    viewHolder.itemView.rowStartTime.text.toString()
                                 )
 
                                 viewModel.updateReminder(reminder)
@@ -122,11 +126,11 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                     bottomSheetView.updateReminderSheet.setOnClickListener {
                         if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
                             val reminder = ReminderModel(
-                                Integer.parseInt(view.idForDelete.text.toString()),
+                                Integer.parseInt(viewHolder.itemView.idForDelete.text.toString()),
                                 bottomSheetView.updateInputHeader.text.toString(),
                                 bottomSheetView.updateInputDescirption.text.toString(),
-                                getDateInMills(view.rowEndTime.text.toString()).toString(),
-                                view.rowStartTime.text.toString()
+                                getDateInMills(viewHolder.itemView.rowEndTime.text.toString()).toString(),
+                                viewHolder.itemView.rowStartTime.text.toString()
                             )
 
                             viewModel.updateReminder(reminder)
@@ -186,6 +190,7 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             if(adapter.itemCount > 0) {
                 view.nothingHere.visibility = GONE
             }
+
         })
 
         return view

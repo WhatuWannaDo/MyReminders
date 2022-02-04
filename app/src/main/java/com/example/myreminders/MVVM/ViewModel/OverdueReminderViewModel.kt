@@ -28,7 +28,7 @@ class OverdueReminderViewModel(application: Application) : AndroidViewModel(appl
         }
     }
 
-    fun deleteCompletedReminder(overdueReminderModel: OverdueReminderModel){
+    fun deleteOverdueReminder(overdueReminderModel: OverdueReminderModel){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteReminder(overdueReminderModel)
         }

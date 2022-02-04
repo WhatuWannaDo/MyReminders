@@ -110,7 +110,7 @@ class CompletedReminders : Fragment() {
                         val currentDate = sdf.format(Calendar.getInstance().time)
                         if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
                             val reminder = ReminderModel(
-                                Integer.parseInt(view.completeIdForDelete.text.toString()),
+                                Integer.parseInt(viewHolder.itemView.completeIdForDelete.text.toString()),
                                 bottomSheetView.updateInputHeader.text.toString(),
                                 bottomSheetView.updateInputDescirption.text.toString(),
                                 getDateInMills(bottomSheetViewCalendar.getDate.text.toString()).toString(),

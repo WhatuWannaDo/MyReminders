@@ -87,6 +87,7 @@ class OverdueReminders : Fragment() {
                             )
 
                             completedViewModel.addCompletedReminder(reminder)
+                            deleteReminderFromDatabase(Integer.parseInt(viewHolder.itemView.idForOverdue.text.toString()))
                             bottomSheetDialogCalendar.dismiss()
                             bottomSheetDialog.dismiss()
                         }else{

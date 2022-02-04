@@ -159,15 +159,14 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
                     builder.create().show()
                 }
 
-
+                //add reminder into completed
                 bottomSheetViewChoice.bottomSheetChoiceReady.setOnClickListener {
-                    val sdf = SimpleDateFormat("dd.M.yyyy")
-                    val currentDate = sdf.format(Calendar.getInstance().time)
+                    val currentDate = Calendar.getInstance().timeInMillis
                     val completedReminder = CompletedReminderModel(
                         0,
                         viewHolder.itemView.rowHeader.text.toString(),
                         viewHolder.itemView.goneDescription.text.toString(),
-                        currentDate
+                        currentDate.toString()
                     )
                     completedViewModel.addCompletedReminder(completedReminder)
                     deleteReminderFromDatabase(Integer.parseInt(viewHolder.itemView.idForDelete.text.toString()))

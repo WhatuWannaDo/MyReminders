@@ -11,7 +11,7 @@ import com.example.myreminders.Room.Data.DAO.DAO
 import com.example.myreminders.Room.Data.DAO.DAOCompletedReminders
 import com.example.myreminders.Room.Data.DAO.DAOOverdueReminders
 
-@Database(entities = [ReminderModel::class, CompletedReminderModel::class, OverdueReminderModel::class], exportSchema = false, version = 3)
+@Database(entities = [ReminderModel::class, CompletedReminderModel::class, OverdueReminderModel::class], exportSchema = false, version = 4)
 abstract class DataBase : RoomDatabase(){
     abstract fun reminderDao() : DAO
     abstract fun completedDao() : DAOCompletedReminders

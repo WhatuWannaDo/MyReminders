@@ -60,7 +60,7 @@ class CompletedReminders : Fragment() {
         })
 
         //delete single data on swipe
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -76,7 +76,7 @@ class CompletedReminders : Fragment() {
 
 
         //retrieve reminder from completed to main page
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -107,7 +107,7 @@ class CompletedReminders : Fragment() {
                     bottomSheetViewCalendar.saveAddedReminder.setOnClickListener {
 
                         val sdf = SimpleDateFormat("dd.M.yyyy")
-                        val currentDate = sdf.format(Calendar.getInstance().time)
+                        val currentDate = sdf.format(Calendar.getInstance().timeInMillis)
                         if(bottomSheetView.updateInputHeader.text.toString().isNotEmpty() && bottomSheetView.updateInputDescirption.text.toString().isNotEmpty()) {
                             val reminder = ReminderModel(
                                 Integer.parseInt(viewHolder.itemView.completeIdForDelete.text.toString()),

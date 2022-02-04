@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.OverdueReminderModel
 import com.example.myreminders.R
 import kotlinx.android.synthetic.main.overdue_reminders_row.view.*
+import java.text.SimpleDateFormat
 
 class OverdueReminderAdapter : RecyclerView.Adapter<OverdueReminderAdapter.MyOverdueViewHolder>() {
     class MyOverdueViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {}
@@ -22,8 +23,10 @@ class OverdueReminderAdapter : RecyclerView.Adapter<OverdueReminderAdapter.MyOve
     override fun onBindViewHolder(holder: MyOverdueViewHolder, position: Int) {
         val list = remList[position]
 
+        val sdf = SimpleDateFormat("dd.M.yyyy")
+
         holder.itemView.headerForOverdue.setText(list.header)
-        holder.itemView.endDateOverdue.setText(list.overdueTime)
+        holder.itemView.endDateOverdue.setText(sdf.format(list.overdueTime.toLong()))
 
         holder.itemView.idForOverdue.setText(list.id.toString())
         holder.itemView.descriptionForOverdue.setText(list.description)

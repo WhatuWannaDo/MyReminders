@@ -2,12 +2,18 @@ package com.example.myreminders.MVVM.View.MainPage
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.view.View.GONE
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -188,6 +194,13 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             adapter.setData(it)
             if(adapter.itemCount > 0) {
                 view.nothingHere.visibility = GONE
+            }
+            adapter.overdueListener { data ->
+                overdueViewModel.addOverdueReminder(data)
+
+            }
+            adapter.reminderListener { deleteData ->
+                viewModel.deleteReminder(deleteData)
             }
 
         })

@@ -42,6 +42,7 @@
                 android:id="@+id/completedDateRow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="14dp"
                 android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/textView4"

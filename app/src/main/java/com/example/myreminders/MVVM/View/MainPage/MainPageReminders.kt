@@ -1,10 +1,9 @@
 package com.example.myreminders.MVVM.View.MainPage
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -37,6 +36,10 @@ import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.hardware.SensorManager
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.myreminders.MainActivity
 
 
 class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
@@ -45,6 +48,10 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var viewModel : ReminderViewModel
     private lateinit var completedViewModel : CompletedReminderViewModel
     private lateinit var overdueViewModel: OverdueReminderViewModel
+
+    val CHANNEL_ID = "channelID"
+    val CHANNEL_NAME = "channelName"
+    val NOTIFICATION_ID = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -188,6 +195,12 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
 
         }).attachToRecyclerView(view.recyclerView)
 
+        //pending intent
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        val sendIntent = TaskStackBuilder.create(requireContext()).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
 
         viewModel.readAllReminders.observe(viewLifecycleOwner, Observer {
@@ -197,7 +210,17 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
             }
             adapter.overdueListener { data ->
                 overdueViewModel.addOverdueReminder(data)
-
+                //added notify
+                createNotifyChannel()
+                val notify = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                    .setContentTitle("Уведомление")
+                    .setContentText("У вас появилось просроченное напоминание!")
+                    .setSmallIcon(R.drawable.ic_baseline_edit_calendar_24)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setContentIntent(sendIntent)
+                    .build()
+                val notifyManager = NotificationManagerCompat.from(requireContext())
+                notifyManager.notify(NOTIFICATION_ID, notify)
             }
             adapter.reminderListener { deleteData ->
                 viewModel.deleteReminder(deleteData)
@@ -208,7 +231,18 @@ class MainPageReminders : Fragment(), SearchView.OnQueryTextListener {
         return view
     }
 
+    fun createNotifyChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
+                lightColor = Color.GREEN
+                enableLights(true)
+            }
+            val notificationManager : NotificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
 
+        }
+    }
 
 
 

@@ -20,9 +20,9 @@
 
             <TextView
                 android:id="@+id/headerForOverdue"
-                android:layout_width="191dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="5dp"
+                android:layout_width="177dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="10dp"
                 android:text="TextView"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -33,8 +33,8 @@
                 android:id="@+id/endDateOverdue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="14dp"
                 android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,8 +61,8 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="14dp"
                 android:text="Дата окончания:"
                 app:layout_constraintStart_toEndOf="@+id/headerForOverdue"
                 app:layout_constraintTop_toTopOf="parent" />

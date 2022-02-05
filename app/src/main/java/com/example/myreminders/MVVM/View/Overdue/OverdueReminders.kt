@@ -92,10 +92,12 @@ class OverdueReminders : Fragment() {
                         }
                     }
 
+                    adapter.notifyDataSetChanged()
                     bottomSheetDialogCalendar.setContentView(bottomSheetViewCalendar)
                     bottomSheetDialogCalendar.show()
                 }
 
+                adapter.notifyDataSetChanged()
                 bottomSheetDialog.setContentView(bottomSheetView)
                 bottomSheetDialog.show()
             }

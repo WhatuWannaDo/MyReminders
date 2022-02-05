@@ -14,16 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myreminders.MVVM.Model.CompletedReminderModel
 import com.example.myreminders.MVVM.Model.OverdueReminderModel
-import com.example.myreminders.MVVM.Model.ReminderModel
 import com.example.myreminders.MVVM.ViewModel.CompletedReminderViewModel
 import com.example.myreminders.MVVM.ViewModel.OverdueReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_update_reminder.view.*
-import kotlinx.android.synthetic.main.fragment_completed_reminders.view.*
 import kotlinx.android.synthetic.main.fragment_overdue_reminders.view.*
-import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
 import kotlinx.android.synthetic.main.overdue_reminders_row.view.*
 import java.text.SimpleDateFormat
 

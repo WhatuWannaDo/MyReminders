@@ -3,7 +3,6 @@ package com.example.myreminders.MVVM.ViewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.myreminders.MVVM.Model.CompletedReminderModel
 import com.example.myreminders.Room.Data.DataBase.DataBase

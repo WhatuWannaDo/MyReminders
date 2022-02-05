@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +20,8 @@ import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_update_reminder.view.*
-import kotlinx.android.synthetic.main.completed_reminders_row.*
 import kotlinx.android.synthetic.main.completed_reminders_row.view.*
-import kotlinx.android.synthetic.main.fragment_completed_reminders.*
 import kotlinx.android.synthetic.main.fragment_completed_reminders.view.*
-import kotlinx.android.synthetic.main.main_page_reminders_row.*
-import kotlinx.android.synthetic.main.main_page_reminders_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 

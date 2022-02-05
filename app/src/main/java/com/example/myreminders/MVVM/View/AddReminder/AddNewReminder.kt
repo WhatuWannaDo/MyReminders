@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.myreminders.MVVM.Model.OverdueReminderModel
 import com.example.myreminders.MVVM.Model.ReminderModel
-import com.example.myreminders.MVVM.ViewModel.OverdueReminderViewModel
 import com.example.myreminders.MVVM.ViewModel.ReminderViewModel
 import com.example.myreminders.R
 import com.google.android.material.bottomsheet.BottomSheetDialog

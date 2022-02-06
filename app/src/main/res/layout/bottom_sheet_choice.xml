@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/bottomSheetChoiceReady"
-        android:layout_width="120dp"
+        android:layout_width="125dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="4dp"
